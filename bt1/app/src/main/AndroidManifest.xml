@@ -23,6 +23,10 @@
 
         <!-- User Home Activity -->
         <activity android:name=".activity.UserHomeActivity" />
+        <activity android:name=".activity.AddUserActivity" />
+        <activity android:name=".activity.SearchUserActivity" />
+        <activity android:name=".activity.EditUserActivity" />
+
     </application>
 
 </manifest>

@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bt1.R;
+import com.example.bt1.model.User;
+import com.example.bt1.model.UserList;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -36,11 +38,14 @@ public class LoginActivity extends AppCompatActivity {
                 String username = txtUsername.getText().toString();
                 String password = txtPassword.getText().toString();
 
-                if (username.equals("B21DCVT442") && password.equals("23042003")) {
+                User currentUser = UserList.findUserByUsername(username);
+
+                if (currentUser != null && currentUser.getPassword().equals(password)) {
                     // Login successful
                     Intent intent = new Intent(LoginActivity.this, UserHomeActivity.class);
-                    intent.putExtra("username", username);
+                    intent.putExtra("user", currentUser);
                     startActivity(intent);
+                    finish(); // Finish the LoginActivity so the user can't go back to it
                 } else {
                     // Login failed
                     Toast.makeText(LoginActivity.this, "Login failed. Invalid username or password. Please try again.", Toast.LENGTH_SHORT).show();
@@ -49,4 +54,3 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 }
-

@@ -14,4 +14,25 @@
         android:text="@string/hello_user"
         android:textSize="24sp" />
 
+    <Button
+        android:id="@+id/btnAddUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add User"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnSearchUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search User"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnEditUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit User"
+        android:layout_marginTop="16dp" />
+
 </LinearLayout>
