@@ -14,7 +14,7 @@ import com.example.bt1.model.User;
 public class UserHomeActivity extends AppCompatActivity {
 
     private TextView tvWelcome;
-    private Button btnAddUser, btnSearchUser, btnEditUser;
+    private Button btnAddUser, btnSearchUser, btnDeleteUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class UserHomeActivity extends AppCompatActivity {
         tvWelcome = findViewById(R.id.tvWelcome);
         btnAddUser = findViewById(R.id.btnAddUser);
         btnSearchUser = findViewById(R.id.btnSearchUser);
-        btnEditUser = findViewById(R.id.btnEditUser);
+        btnDeleteUser = findViewById(R.id.btnDeleteUser);
 
         User user = (User) getIntent().getSerializableExtra("user");
 
@@ -46,11 +46,11 @@ public class UserHomeActivity extends AppCompatActivity {
             }
         });
 
-        btnEditUser.setOnClickListener(new View.OnClickListener() {
+        btnDeleteUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UserHomeActivity.this, EditUserActivity.class);
-                intent.putExtra("user", user);
+                Intent intent = new Intent(UserHomeActivity.this, SearchUserActivity.class);
+                intent.putExtra("isDeleteFunction", true);
                 startActivity(intent);
             }
         });

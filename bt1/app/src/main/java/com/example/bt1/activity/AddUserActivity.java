@@ -37,6 +37,15 @@ public class AddUserActivity extends AppCompatActivity {
                 String fullname = txtFullname.getText().toString();
                 String email = txtEmail.getText().toString();
 
+                if (!UserList.findAllUsersByUsername(username).isEmpty()) {
+                    Toast.makeText(AddUserActivity.this, "Username was used. Please try another username!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if (!UserList.findAllUsersByEmail(email).isEmpty()) {
+                    Toast.makeText(AddUserActivity.this, "Email was used. Please try another email!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 User user = new User(username, password, fullname, email);
                 UserList.addUser(user);
 

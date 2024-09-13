@@ -32,6 +32,7 @@ public class EditUserActivity extends AppCompatActivity {
 
         User user = (User) getIntent().getSerializableExtra("user");
 
+        assert user != null;
         txtEditUsername.setText(user.getUsername());
         txtEditPassword.setText(user.getPassword());
         txtEditFullname.setText(user.getFullname());
@@ -54,6 +55,11 @@ public class EditUserActivity extends AppCompatActivity {
                 String newPassword = txtEditPassword.getText().toString();
                 String newFullname = txtEditFullname.getText().toString();
                 String newEmail = txtEditEmail.getText().toString();
+
+                if (!UserList.findAllUsersByEmail(newEmail).isEmpty()) {
+                    Toast.makeText(EditUserActivity.this, "Email was used. Please try another email!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 UserList.updateUser(username, newPassword, newFullname, newEmail);
 

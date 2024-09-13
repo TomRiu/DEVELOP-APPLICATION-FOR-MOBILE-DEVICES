@@ -18,21 +18,21 @@
         android:id="@+id/btnAddUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add User"
+        android:text="@string/add_user"
         android:layout_marginTop="16dp" />
 
     <Button
         android:id="@+id/btnSearchUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Search User"
+        android:text="@string/search_user"
         android:layout_marginTop="16dp" />
 
     <Button
-        android:id="@+id/btnEditUser"
+        android:id="@+id/btnDeleteUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit User"
+        android:text="@string/delete_user"
         android:layout_marginTop="16dp" />
 
 </LinearLayout>

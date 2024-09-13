@@ -40,7 +40,7 @@ public class UserList {
     }
 
     public static List<User> findAllUsersByEmail(String query) {
-        Predicate<User> predicate = u -> u.getEmail().contains(query);
+        Predicate<User> predicate = u -> u.getEmail().toLowerCase().contains(query.toLowerCase());
         return userList.stream()
                 .filter(predicate)
                 .collect(Collectors.toList());
@@ -51,5 +51,9 @@ public class UserList {
         user.setPassword(newPassword);
         user.setFullname(newFullname);
         user.setEmail(newEmail);
+    }
+
+    public static void delete(User user) {
+        userList.remove(user);
     }
 }

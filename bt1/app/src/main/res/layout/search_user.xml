@@ -9,13 +9,13 @@
         android:id="@+id/txtSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search users" />
+        android:hint="@string/search_method" />
 
     <Button
         android:id="@+id/btnSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Search" />
+        android:text="@string/search_user" />
 
     <ListView
         android:id="@+id/lvResults"

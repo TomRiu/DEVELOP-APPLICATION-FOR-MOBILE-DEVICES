@@ -10,7 +10,7 @@
         android:id="@+id/txtEditUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
+        android:hint="@string/username"
         android:inputType="text"
         android:enabled="false" />
 
@@ -18,35 +18,35 @@
         android:id="@+id/txtEditPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword" />
 
     <EditText
         android:id="@+id/txtEditFullname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Fullname"
+        android:hint="@string/fullname"
         android:inputType="text" />
 
     <EditText
         android:id="@+id/txtEditEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
+        android:hint="@string/email"
         android:inputType="textEmailAddress" />
 
     <Button
         android:id="@+id/btnReset"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Reset"
+        android:text="@string/reset"
         android:layout_marginTop="16dp" />
 
     <Button
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="@string/save"
         android:layout_marginTop="16dp" />
 
 </LinearLayout>

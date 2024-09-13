@@ -1,7 +1,21 @@
 <resources>
     <string name="app_name">bt1</string>
+
     <string name="password">Password</string>
     <string name="username">Username</string>
-    <string name="login">Login</string>
+    <string name="fullname">Fullname</string>
+    <string name="email">Email</string>
+
     <string name="hello_user">Hello, User!</string>
+
+    <string name="search_method">Search by username or email</string>
+
+<!--Button-->
+    <string name="login">Login</string>
+    <string name="search_user">Search User</string>
+    <string name="add_user">Add User</string>
+    <string name="edit_user">Edit User</string>
+    <string name="reset">Reset</string>
+    <string name="save">Save</string>
+    <string name="delete_user">Delete User</string>
 </resources>
