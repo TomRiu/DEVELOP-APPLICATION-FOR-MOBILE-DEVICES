@@ -10,6 +10,12 @@
 
     <string name="search_method">Search by username or email</string>
 
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+
 <!--Button-->
     <string name="login">Login</string>
     <string name="search_user">Search User</string>

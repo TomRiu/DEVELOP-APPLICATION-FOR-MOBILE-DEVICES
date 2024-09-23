@@ -1,15 +1,19 @@
 package com.example.bt1.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class User implements Serializable {
     private String username;
     private String password;
     private String fullname;
     private String email;
+    private String gender;
+    private Date dob;
 
     // Default constructor
     public User() {
+
     }
 
     public User(String username, String password, String fullname, String email) {
@@ -17,6 +21,15 @@ public class User implements Serializable {
         this.password = password;
         this.fullname = fullname;
         this.email = email;
+    }
+
+    public User(String username, String password, String fullname, String email, String gender, Date dob) {
+        this.username = username;
+        this.password = password;
+        this.fullname = fullname;
+        this.email = email;
+        this.gender = gender;
+        this.dob = dob;
     }
 
     // Getter for username
@@ -53,6 +66,22 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
     }
 }
 
