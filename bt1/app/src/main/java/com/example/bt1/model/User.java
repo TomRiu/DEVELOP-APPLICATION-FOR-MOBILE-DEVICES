@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class User implements Serializable {
+    private Integer id;
     private String username;
     private String password;
     private String fullname;
@@ -30,6 +31,14 @@ public class User implements Serializable {
         this.email = email;
         this.gender = gender;
         this.dob = dob;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     // Getter for username

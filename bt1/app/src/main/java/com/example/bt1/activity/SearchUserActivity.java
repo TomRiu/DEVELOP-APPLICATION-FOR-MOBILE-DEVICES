@@ -20,12 +20,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.example.bt1.R;
 import com.example.bt1.model.User;
-import com.example.bt1.model.UserList;
+import com.example.bt1.dao.UserDAO;
 
 public class SearchUserActivity extends AppCompatActivity {
 
@@ -34,6 +33,7 @@ public class SearchUserActivity extends AppCompatActivity {
     private ListView lvResults;
     private List<User> userList;
     private ArrayAdapter<User> userAdapter;
+    private UserDAO userDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,10 @@ public class SearchUserActivity extends AppCompatActivity {
         btnSearch = findViewById(R.id.btnSearch);
         lvResults = findViewById(R.id.lvResults);
 
-        userList = new ArrayList<>();
+        // Initialize UserDAO
+        userDAO = new UserDAO(this);
+
+        userList = userDAO.getAllUsers();
 
         userAdapter = new ArrayAdapter<User>(this, R.layout.list_item_user, userList) {
             @NonNull
@@ -100,9 +103,9 @@ public class SearchUserActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String query = txtSearch.getText().toString().trim();
                 if (query.contains("@")) {
-                    userList = UserList.findAllUsersByEmail(query);
+                    userList = userDAO.findAllUsersByEmail(query);
                 } else {
-                    userList = UserList.findAllUsersByUsername(query);
+                    userList = userDAO.findAllUsersByUsername(query);
                 }
 
                 if (userList.isEmpty()) {
@@ -125,9 +128,13 @@ public class SearchUserActivity extends AppCompatActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                UserList.delete(user);
-                Toast.makeText(SearchUserActivity.this, "User deleted successfully!", Toast.LENGTH_SHORT).show();
-                btnSearch.callOnClick();
+                int rowsDeleted = userDAO.deleteUser(user);
+                if (rowsDeleted > 0) {
+                    Toast.makeText(SearchUserActivity.this, "User deleted successfully!", Toast.LENGTH_SHORT).show();
+                    btnSearch.callOnClick();
+                } else {
+                    Toast.makeText(SearchUserActivity.this, "Failed to delete user!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {

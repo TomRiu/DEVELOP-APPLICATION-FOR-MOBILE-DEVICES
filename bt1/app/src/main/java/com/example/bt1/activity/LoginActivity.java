@@ -11,13 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bt1.R;
 import com.example.bt1.model.User;
-import com.example.bt1.model.UserList;
+import com.example.bt1.dao.UserDAO;
+
+import java.util.Date;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText txtUsername;
     private EditText txtPassword;
     private Button btnLogin;
+    private UserDAO userDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,15 @@ public class LoginActivity extends AppCompatActivity {
         txtUsername = findViewById(R.id.txtUsername);
         txtPassword = findViewById(R.id.txtPassword);
         btnLogin = findViewById(R.id.btnLogin);
+
+        // Initialize UserDAO
+        userDAO = new UserDAO(this);
+
+        if (userDAO.findUserByUsername("admin") == null) {
+            User admin = new User("admin", "admin", "Admin User", "admin@email.com", "Male", new Date(23042003));
+            userDAO.createUser(admin);
+        }
+
 
         ClickOnLogin();
     }
@@ -38,9 +50,10 @@ public class LoginActivity extends AppCompatActivity {
                 String username = txtUsername.getText().toString();
                 String password = txtPassword.getText().toString();
 
-                User currentUser = UserList.findUserByUsername(username);
+                User currentUser = userDAO.findUserByUsername(username);
 
-                if (currentUser != null && currentUser.getPassword().equals(password)) {
+                if(currentUser == null) Toast.makeText(LoginActivity.this, "Login failed. Invalid username. Please try again.", Toast.LENGTH_SHORT).show();
+                else if (currentUser.getPassword().equals(password)) {
                     // Login successful
                     Intent intent = new Intent(LoginActivity.this, UserHomeActivity.class);
                     intent.putExtra("user", currentUser);
