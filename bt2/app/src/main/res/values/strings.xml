@@ -6,4 +6,8 @@
         <item>@drawable/shopping_bag</item>
         <!-- Thêm các icon khác tại đây -->
     </string-array>
+    <string-array name="in_out_array">
+        <item>In</item>
+        <item>Out</item>
+    </string-array>
 </resources>

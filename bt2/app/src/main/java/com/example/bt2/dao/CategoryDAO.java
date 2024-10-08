@@ -89,4 +89,14 @@ public class CategoryDAO {
         return db.insert(DBHelper.TABLE_CATEGORY, null, values);
     }
 
+    public boolean addCategoryInOut(CategoryInOut categoryInOut) {
+        ContentValues values = new ContentValues();
+        values.put(DBHelper.COLUMN_CATEGORY_ID, categoryInOut.getCategory().getId());
+        values.put(DBHelper.COLUMN_INOUT_ID, categoryInOut.getIdInOut());
+
+        long result = db.insert(DBHelper.TABLE_CATEGORY_INOUT, null, values);
+        return result != -1; // Trả về true nếu thêm thành công
+    }
+
+
 }

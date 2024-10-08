@@ -1,5 +1,6 @@
 package com.example.bt2.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,7 +29,7 @@ public class AddTransactionActivity extends AppCompatActivity {
     private Spinner spinnerCategory;
     private EditText editTextAmount, editTextNote;
     private DatePicker datePicker;
-    private Button buttonAdd;
+    private Button buttonAdd, buttonAddCategory;
 
     private CategoryDAO categoryDAO;
     private TransactionDAO transactionDAO;
@@ -46,6 +47,7 @@ public class AddTransactionActivity extends AppCompatActivity {
         datePicker = findViewById(R.id.datePicker);
         editTextNote = findViewById(R.id.editTextNote);
         buttonAdd = findViewById(R.id.buttonAdd);
+        buttonAddCategory = findViewById(R.id.buttonAddCategory);
 
         // Initialize DAOs
         DBHelper dbHelper = new DBHelper(this);
@@ -62,7 +64,26 @@ public class AddTransactionActivity extends AppCompatActivity {
                 addTransaction();
             }
         });
+        // Set up add category button click listener
+        buttonAddCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddTransactionActivity.this, AddCategoryActivity.class);
+                startActivityForResult(intent, 1); // Khởi chạy AddCategoryActivity với yêu cầu nhận kết quả
+            }
+        });
+
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            // Gọi lại danh sách danh mục
+            boolean isIncome = radioThu.isChecked(); // Kiểm tra loại danh mục
+            loadCategories(isIncome);
+        }
+    }
+
 
     private void setupCategorySpinner() {
         radioThu.setOnCheckedChangeListener((buttonView, isChecked) -> {

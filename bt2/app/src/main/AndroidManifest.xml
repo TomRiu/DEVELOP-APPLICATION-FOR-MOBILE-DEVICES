@@ -25,6 +25,8 @@
         <activity
             android:name=".activity.AddTransactionActivity"
             android:exported="false" />
+        <activity android:name=".activity.AddCategoryActivity" />
+
 
 
     </application>
