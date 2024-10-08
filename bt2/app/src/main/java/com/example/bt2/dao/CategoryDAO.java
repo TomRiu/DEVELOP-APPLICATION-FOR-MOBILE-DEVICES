@@ -1,6 +1,7 @@
 package com.example.bt2.dao;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -40,6 +41,7 @@ public class CategoryDAO {
         Category category = new Category();
         category.setId(cursor.getInt(cursor.getColumnIndex(DBHelper.COLUMN_ID)));
         category.setName(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_NAME)));
+        category.setIcon(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ICON))); // Thêm dòng này
         category.setNote(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_NOTE)));
 
         int parentId = cursor.getInt(cursor.getColumnIndex(DBHelper.COLUMN_PARENT_ID));
@@ -55,6 +57,7 @@ public class CategoryDAO {
 
         return categoryInOut;
     }
+
 
     @SuppressLint("Range")
     private Category getCategoryById(int id) {

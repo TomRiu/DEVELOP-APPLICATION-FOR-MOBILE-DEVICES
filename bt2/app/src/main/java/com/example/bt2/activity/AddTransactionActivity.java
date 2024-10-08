@@ -109,15 +109,15 @@ public class AddTransactionActivity extends AppCompatActivity {
             boolean success = transactionDAO.add(transaction);
 
             if (success) {
-                Toast.makeText(this, "Transaction added successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Giao dịch đã được thêm thành công", Toast.LENGTH_SHORT).show();
                 finish();
             } else {
-                Toast.makeText(this, "Failed to add transaction", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Thêm giao dịch thất bại", Toast.LENGTH_SHORT).show();
             }
         } catch (NumberFormatException e) {
-            Toast.makeText(this, "Please enter a valid amount", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Vui lòng nhập số tiền hợp lệ", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Toast.makeText(this, "An error occurred", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Đã xảy ra lỗi", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }

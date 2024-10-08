@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "expense_tracker.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Table names
     public static final String TABLE_INOUT = "inOut";
@@ -23,6 +23,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // category table columns
     public static final String COLUMN_PARENT_ID = "idParent";
+    public static final String COLUMN_ICON = "icon";
     public static final String COLUMN_NOTE = "note";
 
     // categoryInOut table columns
@@ -50,6 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String CREATE_CATEGORY_TABLE = "CREATE TABLE " + TABLE_CATEGORY + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY,"
                 + COLUMN_NAME + " TEXT,"
+                + COLUMN_ICON + " TEXT,"
                 + COLUMN_PARENT_ID + " INTEGER,"
                 + COLUMN_NOTE + " TEXT" + ")";
         db.execSQL(CREATE_CATEGORY_TABLE);
@@ -79,15 +81,14 @@ public class DBHelper extends SQLiteOpenHelper {
         // Insert InOut types
         db.execSQL("INSERT INTO " + TABLE_INOUT + " (" + COLUMN_NAME + ") VALUES ('In'), ('Out')");
 
-        // Insert In categories
-        db.execSQL("INSERT INTO " + TABLE_CATEGORY + " (" + COLUMN_NAME + ") VALUES ('Salary'), ('Part-time'), ('Scholarship'), ('ParentGive'), ('Present')");
+        // Insert In categories with icon
+        db.execSQL("INSERT INTO " + TABLE_CATEGORY + " (" + COLUMN_NAME + ", " + COLUMN_ICON + ") VALUES ('Salary', 'icon_salary'), ('Part-time', 'icon_parttime'), ('Scholarship', 'icon_scholarship'), ('ParentGive', 'icon_parent'), ('Present', 'icon_present')");
 
-        // Insert Out categories
-        db.execSQL("INSERT INTO " + TABLE_CATEGORY + " (" + COLUMN_NAME + ") VALUES ('Tuition'), ('Daily Pay'), ('Transport Pay'), ('Present Pay')");
-        db.execSQL("INSERT INTO " + TABLE_CATEGORY + " (" + COLUMN_NAME + ", " + COLUMN_PARENT_ID + ") VALUES ('Home Pay', 7), ('Electric Pay', 7), ('Water Pay', 7), ('Telephone Pay', 7), ('Eat Pay', 7)");
+        // Insert Out categories with icon
+        db.execSQL("INSERT INTO " + TABLE_CATEGORY + " (" + COLUMN_NAME + ", " + COLUMN_ICON + ") VALUES ('Tuition', 'icon_tuition'), ('Daily Pay', 'icon_daily'), ('Transport Pay', 'icon_transport'), ('Present Pay', 'icon_present')");
+        db.execSQL("INSERT INTO " + TABLE_CATEGORY + " (" + COLUMN_NAME + ", " + COLUMN_ICON + ", " + COLUMN_PARENT_ID + ") VALUES ('Home Pay', 'icon_home', 7), ('Electric Pay', 'icon_electric', 7), ('Water Pay', 'icon_water', 7), ('Telephone Pay', 'icon_telephone', 7), ('Eat Pay', 'icon_eat', 7)");
 
         // Link categories to InOut types
-        // Assuming In categories have IDs 1-5 and Out categories have IDs 6-13
         for (int i = 1; i <= 5; i++) {
             db.execSQL("INSERT INTO " + TABLE_CATEGORY_INOUT + " (" + COLUMN_CATEGORY_ID + ", " + COLUMN_INOUT_ID + ") VALUES (" + i + ", 1)");
         }
@@ -95,6 +96,7 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL("INSERT INTO " + TABLE_CATEGORY_INOUT + " (" + COLUMN_CATEGORY_ID + ", " + COLUMN_INOUT_ID + ") VALUES (" + i + ", 2)");
         }
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

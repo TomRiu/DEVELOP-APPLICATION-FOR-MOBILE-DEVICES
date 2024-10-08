@@ -96,6 +96,7 @@ public class TransactionDAO {
 
         Category category = new Category();
         category.setName(cursor.getString(cursor.getColumnIndex("category_name")));
+        category.setIcon(cursor.getString(cursor.getColumnIndex("icon"))); // Thêm dòng này
         categoryInOut.setCategory(category);
 
         InOut inOut = new InOut();
@@ -107,6 +108,7 @@ public class TransactionDAO {
 
         return transaction;
     }
+
 
     public double getTotalIncome(Date date) {
         return getTotal(date, 1); // Assuming 1 is for income

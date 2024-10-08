@@ -2,4 +2,8 @@
 <resources>
     <item name="buttonTongThu" type="id" />
     <item name="buttonTongChi" type="id" />
+    <item name="spinnerType" type="id" />
+    <item name="editTextName" type="id" />
+    <item name="spinnerIcon" type="id" />
+    <item name="spinnerParent" type="id" />
 </resources>

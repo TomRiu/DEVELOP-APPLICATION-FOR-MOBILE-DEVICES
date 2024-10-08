@@ -7,15 +7,17 @@ public class Category {
     private int id;
     private String name;
     private Category parent;
+    private String icon;
     private String note;
 
     public Category() {
     }
 
-    public Category(int id, String name, Category parent, String note) {
+    public Category(int id, String name, Category parent, String icon, String note) {
         this.id = id;
         this.name = name;
         this.parent = parent;
+        this.icon = icon;
         this.note = note;
     }
 
@@ -49,5 +51,13 @@ public class Category {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getIcon() { // Thêm getter cho icon
+        return icon;
+    }
+
+    public void setIcon(String icon) { // Thêm setter cho icon
+        this.icon = icon;
     }
 }

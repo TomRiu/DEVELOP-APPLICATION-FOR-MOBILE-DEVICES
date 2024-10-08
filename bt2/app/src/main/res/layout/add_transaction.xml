@@ -41,12 +41,26 @@
                 android:layout_weight="1"/>
         </RadioGroup>
 
-        <Spinner
-            android:id="@+id/spinnerCategory"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:hint="category"/>
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <Spinner
+                android:id="@+id/spinnerCategory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="category"/>
+
+            <Button
+                android:id="@+id/buttonAddCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+"
+                android:layout_marginLeft="8dp"/>
+        </LinearLayout>
 
         <EditText
             android:id="@+id/editTextAmount"
@@ -78,7 +92,5 @@
             android:text="Add"/>
 
     </LinearLayout>
-
-
 
 </ScrollView>
