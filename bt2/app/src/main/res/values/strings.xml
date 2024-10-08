@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">bt2</string>
+    <string-array name="category_icons">
+        <item>@drawable/home</item>
+        <item>@drawable/date</item>
+        <item>@drawable/shopping_bag</item>
+        <!-- Thêm các icon khác tại đây -->
+    </string-array>
 </resources>

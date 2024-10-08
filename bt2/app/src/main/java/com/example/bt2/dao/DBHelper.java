@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "expense_tracker.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // Table names
     public static final String TABLE_INOUT = "inOut";
@@ -82,11 +82,11 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + TABLE_INOUT + " (" + COLUMN_NAME + ") VALUES ('In'), ('Out')");
 
         // Insert In categories with icon
-        db.execSQL("INSERT INTO " + TABLE_CATEGORY + " (" + COLUMN_NAME + ", " + COLUMN_ICON + ") VALUES ('Salary', 'icon_salary'), ('Part-time', 'icon_parttime'), ('Scholarship', 'icon_scholarship'), ('ParentGive', 'icon_parent'), ('Present', 'icon_present')");
+        db.execSQL("INSERT INTO " + TABLE_CATEGORY + " (" + COLUMN_NAME + ", " + COLUMN_ICON + ") VALUES ('Salary', '@drawable/home'), ('Part-time', '@drawable/date'), ('Scholarship', '@drawable/shopping_bag'), ('ParentGive', '@drawable/home'), ('Present', '@drawable/date')");
 
         // Insert Out categories with icon
-        db.execSQL("INSERT INTO " + TABLE_CATEGORY + " (" + COLUMN_NAME + ", " + COLUMN_ICON + ") VALUES ('Tuition', 'icon_tuition'), ('Daily Pay', 'icon_daily'), ('Transport Pay', 'icon_transport'), ('Present Pay', 'icon_present')");
-        db.execSQL("INSERT INTO " + TABLE_CATEGORY + " (" + COLUMN_NAME + ", " + COLUMN_ICON + ", " + COLUMN_PARENT_ID + ") VALUES ('Home Pay', 'icon_home', 7), ('Electric Pay', 'icon_electric', 7), ('Water Pay', 'icon_water', 7), ('Telephone Pay', 'icon_telephone', 7), ('Eat Pay', 'icon_eat', 7)");
+        db.execSQL("INSERT INTO " + TABLE_CATEGORY + " (" + COLUMN_NAME + ", " + COLUMN_ICON + ") VALUES ('Tuition', '@drawable/shopping_bag'), ('Daily Pay', '@drawable/home'), ('Transport Pay', '@drawable/date'), ('Present Pay', '@drawable/shopping_bag')");
+        db.execSQL("INSERT INTO " + TABLE_CATEGORY + " (" + COLUMN_NAME + ", " + COLUMN_ICON + ", " + COLUMN_PARENT_ID + ") VALUES ('Home Pay', '@drawable/home', 7), ('Electric Pay', '@drawable/date', 7), ('Water Pay', '@drawable/shopping_bag', 7), ('Telephone Pay', '@drawable/home', 7), ('Eat Pay', '@drawable/date', 7)");
 
         // Link categories to InOut types
         for (int i = 1; i <= 5; i++) {

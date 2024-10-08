@@ -74,4 +74,19 @@ public class CategoryDAO {
         cursor.close();
         return category;
     }
+
+    public long addCategory(Category category) {
+        ContentValues values = new ContentValues();
+        values.put(DBHelper.COLUMN_NAME, category.getName());
+        values.put(DBHelper.COLUMN_ICON, category.getIcon());
+        values.put(DBHelper.COLUMN_NOTE, category.getNote());
+        if (category.getParent() != null) {
+            values.put(DBHelper.COLUMN_PARENT_ID, category.getParent().getId());
+        } else {
+            values.put(DBHelper.COLUMN_PARENT_ID, 0); // Nếu không có parent
+        }
+
+        return db.insert(DBHelper.TABLE_CATEGORY, null, values);
+    }
+
 }
