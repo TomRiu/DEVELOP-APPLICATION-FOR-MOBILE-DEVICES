@@ -58,7 +58,7 @@ public class TransactionDAO {
 
     public List<Transaction> search(Date day) {
         List<Transaction> transactions = new ArrayList<>();
-        String query = "SELECT t.*, c.name as category_name, i.name as inout_name, i.id as inout_id " +
+        String query = "SELECT t.*, c.name as category_name, i.name as inout_name, i.id as inout_id, c.icon as icon " +
                 "FROM " + DBHelper.TABLE_TRANSACTIONS + " t " +
                 "JOIN " + DBHelper.TABLE_CATEGORY_INOUT + " ci ON t." + DBHelper.COLUMN_CATEGORY_INOUT_ID + " = ci.id " +
                 "JOIN " + DBHelper.TABLE_CATEGORY + " c ON ci." + DBHelper.COLUMN_CATEGORY_ID + " = c.id " +
