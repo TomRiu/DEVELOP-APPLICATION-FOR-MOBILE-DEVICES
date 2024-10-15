@@ -1,5 +1,6 @@
 package com.example.bt2.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,20 +9,27 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bt2.R;
 import com.example.bt2.adapter.CategoryAdapter;
 import com.example.bt2.dao.CategoryDAO;
 import com.example.bt2.dao.DBHelper;
+import com.example.bt2.dao.DailyStatDAO;
 import com.example.bt2.dao.TransactionDAO;
 import com.example.bt2.model.CategoryInOut;
 import com.example.bt2.model.Transaction;
+import com.example.bt2.view.CalendarViewPager;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AddTransactionActivity extends AppCompatActivity {
 
@@ -29,17 +37,26 @@ public class AddTransactionActivity extends AppCompatActivity {
     private Spinner spinnerCategory;
     private EditText editTextAmount, editTextNote;
     private DatePicker datePicker;
-    private Button buttonAdd, buttonAddCategory;
+    private Button buttonAdd, buttonAddCategory, buttonShowCalendar;
+    private TextView textViewDate;
 
     private CategoryDAO categoryDAO;
     private TransactionDAO transactionDAO;
+
+    private SimpleDateFormat dateFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_transaction);
 
-        // Initialize views
+        initializeViews();
+        initializeDAOs();
+        setupListeners();
+        setupInitialDate();
+    }
+
+    private void initializeViews() {
         radioThu = findViewById(R.id.radioThu);
         radioChi = findViewById(R.id.radioChi);
         spinnerCategory = findViewById(R.id.spinnerCategory);
@@ -48,58 +65,41 @@ public class AddTransactionActivity extends AppCompatActivity {
         editTextNote = findViewById(R.id.editTextNote);
         buttonAdd = findViewById(R.id.buttonAdd);
         buttonAddCategory = findViewById(R.id.buttonAddCategory);
+        textViewDate = findViewById(R.id.textViewDate);
+    }
 
-        // Initialize DAOs
+    private void initializeDAOs() {
         DBHelper dbHelper = new DBHelper(this);
         categoryDAO = new CategoryDAO(dbHelper.getReadableDatabase());
         transactionDAO = new TransactionDAO(dbHelper.getWritableDatabase());
-
-        // Set up category spinner
-        setupCategorySpinner();
-
-        // Set up add button click listener
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addTransaction();
-            }
-        });
-        // Set up add category button click listener
-        buttonAddCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AddTransactionActivity.this, AddCategoryActivity.class);
-                startActivityForResult(intent, 1); // Khởi chạy AddCategoryActivity với yêu cầu nhận kết quả
-            }
-        });
-
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            // Gọi lại danh sách danh mục
-            boolean isIncome = radioThu.isChecked(); // Kiểm tra loại danh mục
-            loadCategories(isIncome);
-        }
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
     }
 
-
-    private void setupCategorySpinner() {
+    private void setupListeners() {
         radioThu.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                loadCategories(true);
-            }
+            if (isChecked) loadCategories(true);
         });
 
         radioChi.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                loadCategories(false);
-            }
+            if (isChecked) loadCategories(false);
         });
 
-        // Default to "Thu" categories
+        buttonAdd.setOnClickListener(v -> addTransaction());
+        buttonAddCategory.setOnClickListener(v -> openAddCategoryActivity());
+
+        datePicker.init(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth(),
+                (view, year, monthOfYear, dayOfMonth) -> updateDisplayedDate());
+    }
+
+    private void setupInitialDate() {
         radioThu.setChecked(true);
+        updateDisplayedDate();
+    }
+
+    private void updateDisplayedDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+        textViewDate.setText(dateFormat.format(calendar.getTime()));
     }
 
     private void loadCategories(boolean isIncome) {
@@ -114,11 +114,8 @@ public class AddTransactionActivity extends AppCompatActivity {
             double amount = Double.parseDouble(editTextAmount.getText().toString());
             String note = editTextNote.getText().toString();
 
-            int day = datePicker.getDayOfMonth();
-            int month = datePicker.getMonth();
-            int year = datePicker.getYear();
             Calendar calendar = Calendar.getInstance();
-            calendar.set(year, month, day);
+            calendar.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
             Date date = calendar.getTime();
 
             Transaction transaction = new Transaction();
@@ -140,6 +137,20 @@ public class AddTransactionActivity extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(this, "Đã xảy ra lỗi", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
+        }
+    }
+
+    private void openAddCategoryActivity() {
+        Intent intent = new Intent(AddTransactionActivity.this, AddCategoryActivity.class);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            boolean isIncome = radioThu.isChecked();
+            loadCategories(isIncome);
         }
     }
 }
