@@ -145,14 +145,20 @@ public class TransactionCalendarView extends View {
                 float maxBarHeight = dayRect.height() / 3f;
                 float maxAmount = (float) Math.max(stat.getIncome(), stat.getOutcome());
 
+                // Vẽ thanh thu nhập
                 if (stat.getIncome() > 0) {
                     float barHeight = (float) (stat.getIncome() / maxAmount * maxBarHeight);
-                    canvas.drawRect(dayRect.left + 2, dayRect.bottom - barHeight - 2, dayRect.right - 2, dayRect.bottom - 2, incomePaint);
+                    // Đổi màu chữ cho tổng số tiền thu nhập
+                    textPaint.setColor(Color.GREEN); // Màu chữ cho thu nhập
+                    canvas.drawText(formatNumber(stat.getIncome()), dayRect.left + cellWidth / 2, dayRect.bottom - 2, textPaint);
                 }
 
+                // Vẽ thanh chi tiêu
                 if (stat.getOutcome() > 0) {
                     float barHeight = (float) (stat.getOutcome() / maxAmount * maxBarHeight);
-                    canvas.drawRect(dayRect.left + 2, dayRect.top + 2, dayRect.right - 2, dayRect.top + barHeight + 2, outcomePaint);
+                    // Đổi màu chữ cho tổng số tiền chi tiêu
+                    textPaint.setColor(Color.RED); // Màu chữ cho chi tiêu
+                    canvas.drawText(formatNumber(stat.getOutcome()), dayRect.left + cellWidth / 2, dayRect.top + barHeight + 3, textPaint);
                 }
             }
         }
@@ -231,6 +237,14 @@ public class TransactionCalendarView extends View {
     public void setOnDateSelectedListener(CalendarViewPager.OnDateSelectedListener listener) {
         this.onDateSelectedListener = listener;
     }
+    public static String formatNumber(double number) {
+        if (number < 1000) {
+            return String.valueOf(number);
+        } else {
+            return String.format("%.1fk", number / 1000);
+        }
+    }
+
 }
 
 
